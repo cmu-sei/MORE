@@ -1,0 +1,167 @@
+#muo-container {
+    height: 400px;
+    border: 1px solid ;
+    border-color: #d2d6de;
+}
+
+#muo-container label {
+    color: #555;
+}
+
+#muo-container .muo-title-header {
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    padding-bottom: 0px;
+    background-color: #fff;
+    display: block;
+}
+
+#muo-container .slim-scroll-div, .muo-search-container .fat-scroll-div{
+    height: 90%;
+    position: relative;
+    border-collapse: collapse;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+
+#muo-container .slim-scroll-div {
+    float: left;
+    width: 35%;
+    margin-top: 0px;
+}
+
+#muo-container .fat-scroll-div {
+    float: right;
+    width: 65%;
+    background-color: #ecf0f5;
+    margin-bottom: 0px;
+    border-left: 1px solid #e3e3e3;
+
+}
+
+#muo-container .misuse-case-container {
+    border-bottom: thin double;
+    border-color: #e7eaec;
+    padding-top: 15px;
+}
+
+/*.misuse-case-container {*/
+    /*border-right: thin double;*/
+    /*border-bottom: thin double;*/
+    /*border-color: #e7eaec;*/
+/*}*/
+
+.misuse-case-container:hover,
+    .muo-search-container .misuse-case-container.selected {
+    background-color: #f3f3f4;
+    cursor: pointer;
+}
+
+.misuse-case-container .muo_see_more_div {
+    margin-bottom: 5px;
+    margin-top: -20px;
+}
+
+.misuse-case-header, .use-case-header{
+    padding: 15px;
+    padding-top: 0px;
+}
+
+
+
+.usecase-footer {
+    height: 20px;
+}
+
+.misuse-case-div {
+    width: 100%;
+    padding: 15px;
+    padding-bottom: 0px;
+    border-color: #e7eaec;
+    background-color: transparent;
+    margin-top: 0px;
+}
+
+.use-case-container {
+    width: calc(100% - 20px);
+    margin: 10px;
+    padding: 15px 15px 0 15px;
+    background-color: white;
+
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(173,173,173,1);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(173,173,173,1);
+    box-shadow: 0px 0px 2px 0px rgba(173,173,173,1);
+}
+
+.use-case-container .use-case-div {
+    width: 100%;
+    padding: 15px;
+    padding-bottom: 0px;
+    border-color: #e7eaec;
+    background-color: transparent;
+    margin-top: 0px;
+}
+
+.use-case-container .osr-div {
+    width: 100%;
+    padding: 15px;
+}
+
+#muo-date-header {
+    float: right;
+    color: #888888;
+    font-size: 85%
+}
+
+.use-case-container:hover,
+    .use-case-container.selected {
+    background-color: #f3f3f4;
+    cursor: pointer;
+}
+
+
+#lookup_id_cwes {
+    display: none;
+}
+
+
+.form-control[disabled], fieldset[disabled] .form-control, .readonly .select2-selection,
+.select2-container--default.select2-container--disabled .select2-selection--multiple {
+    /*background-color: #fcfcfc;*/
+    cursor: default !important;
+}
+
+
+.misuse-case-container #misuse-case-name-label,
+    .use-case-container #use-case-name-label{
+    margin-bottom: 5px;
+    font-weight: 700 !important;
+    font-size: 14px;
+    color: #333;
+}
+
+
+.misuse-case-div .heading, .use-case-div .heading {
+    margin-bottom: 0px;
+    font-weight: 400 !important;
+    font-size: 14px;
+    color: #333;
+}
+
+.misuse-case-div .text, .use-case-div .text {
+    font-weight: 300 !important;
+    font-size: 14px;
+    color: #333;
+}
+
+.use-case-div .osr-heading {
+    margin-bottom: 0px;
+    font-weight: 700 !important;
+    font-size: 14px;
+    color: #333;
+}
+
+

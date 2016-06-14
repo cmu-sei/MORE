@@ -1,0 +1,20 @@
+{% load comments i18n crispy_forms_tags widget_tweaks fluent_comments_tags %}{% load url from future %}
+
+{% if form.target_object|comments_are_open %}
+    <form id="comment-form-{{ form.target_object.pk }}" data-object-id="{{ form.target_object.pk }}" action="{% comment_form_target %}" method="post" class="js-comments-form comments-form form-horizontal"
+          data-ajax-action="{% url 'comments-post-comment-ajax' %}">{% csrf_token %}
+      {% if next %}<div><input type="hidden" name="next" value="{{ next }}" /></div>{% endif %}
+
+        {% for field in form %}
+            {% ifequal field.name "comment" %}
+                {% render_field field rows="2" class="textarea form-control" placeholder="Write comment..." %}
+            {% else %}
+                {{ field|as_crispy_field }}
+            {% endifequal %}
+        {% endfor %}
+
+{#      <div class="form-actions">#}
+{#        {% ajax_comment_tags for form.target_object %}#}
+{#      </div>#}
+    </form>
+{% endif %}

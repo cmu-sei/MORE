@@ -1,0 +1,92 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_field_sets %}
+    {# Display the suggestion block only while changing an existing record and not while adding a new record#}
+    {% if change %}
+        <div class="fieldset-box col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        Get Keywords Suggestions
+                    </h3>
+                </div>
+
+                <div class="box-body">
+                    <fieldset class="_module _aligned" id="fieldset-suggest" style="background:transparent">
+                        <div class="fields col-md-12">
+                            <div class="form-group">
+
+                                <textarea class="vLargeTextField form-control" id="suggest_textarea" name="suggest_textarea"
+                                          style="max-width: 100%"
+                                          rows="7"
+                                          placeholder="Enter text here to suggest related keywords...">{{ suggest_textarea }}</textarea>
+                                <div class="pull-right" style="margin-top:5px">
+                                    <input type="submit" id="suggest_button" class="btn btn-success btn-sm"
+                                           autocomplete="off" disabled="disabled"
+                                           value="Request Suggestions" name="_suggest_button"
+                                           data-loading-text="Loading.......">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div id="suggested_keywords_container"></div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            jQuery(function ($) {
+                var container = $(document);
+                var button = $('#suggest_button');
+
+                {# remove keyword when clicking (x) on the tag widget #}
+                container.on('click', '.remove', function (event) {
+                    var parent = $(this).parent();
+                    var value = parent.attr('data-value');
+
+                    $("#suggested_keywords option[value='" + value + "']").remove();
+                    parent.remove();
+
+                });
+
+                {# disable suggest button if text area is empty #}
+                container.on('keyup', '#suggest_textarea', function (event) {
+                    if (this.textLength > 0) {
+                        button.removeAttr("disabled");
+                    } else {
+                        button.attr("disabled", "disabled");
+                    }
+                });
+
+                {# query suggested keywords using ajax on click #}
+                container.on('click', '#suggest_button', function (event) {
+                    event.preventDefault();
+                    var $submit_btn = $(this).button('loading');
+
+                    $.ajax({
+                        url: "suggested_keywords/", // the endpoint
+                        type: "POST", // http method
+                        data: {suggest_textarea: $('#suggest_textarea').val()}, // data sent with the post request
+
+                        // handle a successful response
+                        success: function (result) {
+                            $("#suggested_keywords_container").replaceWith(result);
+                            $submit_btn.button('reset');
+                        },
+
+                        // handle a non-successful response
+                        error: function (xhr, errmsg, err) {
+                            $('#suggested_keywords_wrapper').html("<div class='alert-danger alert radius' role='alert'>Oops! We have encountered an error: " + errmsg + "</div>");
+                            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                        }
+                    });
+                });
+
+            });
+        </script>
+    {% endif %}
+{% endblock %}

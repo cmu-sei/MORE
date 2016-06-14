@@ -1,0 +1,14 @@
+{% load i18n admin_urls %}
+<div class="pull-left">
+    {% if show_delete_link %}
+        {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+        <a class="btn btn-danger deletelink" href="{% add_preserved_filters delete_url %}">{% trans "Delete" %}</a>
+    {% endif %}
+</div>
+
+<div class="pull-right">
+{% if show_invite %}<input type="submit" value="{% trans 'Send Invitation' %}" class="btn btn-success default" name="_invite" />{% endif %}
+{% if show_re_invite %}<input type="submit" value="{% trans 'Re-Send Invitation' %}" class="btn btn-default default" name="_invite"/>{% endif %}
+
+</div>
+<div class="spacer"></div>

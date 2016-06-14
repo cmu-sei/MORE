@@ -1,0 +1,107 @@
+{% extends "frontpage/base.html" %}
+{% load i18n static crispy_forms_tags widget_tweaks %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "dist/css/select2.min.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'frontpage/frontpage.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'fluent_comments/css/ajaxcomments.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'comments/comments.css' %}" />
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src={% static "dist/js/select2.min.js" %}></script>
+    <script src={% static "frontpage/frontpage.js" %}></script>
+    <script type="text/javascript" src="{% static 'comments/comments.js' %}"></script>
+{% endblock %}
+
+{% block navbar %} {% endblock %}
+
+{% block pre_container %}
+    <div class="marquee" id="marquee" role="main" tabindex="-1">
+        <div class="container">
+            <span class="more-icon more-icon-lg more-icon-outline">
+                MORE
+            </span>
+
+            <h2><b>M</b>alware-driven <b>O</b>verlooked <b>RE</b>quirements</h2>
+
+            <p class="lead"> This site is meant to guide requirement engineers in identifying security requirements
+                appropriate for their project. The site focuses on exploited vulnerabilities resulting from design
+                flaws. For each new publicly posted exploited vulnerability, contributors can identify and provide a
+                misuse case, use case and the overlooked security requirement(s) that created the vulnerability. This
+                helps requirements engineers avoid these and potentially other vulnerabilities in their systems. Please
+                register to use and enjoy.</p>
+
+            {% if not user.is_authenticated %}
+                <p class="lead">
+                    <a href="{% url 'account_signup' %}" class="btn btn-outline-inverse btn-lg">Register Now</a>
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="col-md-12">
+
+        <form class="form-horizontal" action method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="col-md-12">
+                <div id="div_id_cwes" class=" {% if form.cwes.errors %} has-error {% endif %}">
+                    <label for="div_id_cwes" class="control-label  requiredField">
+                        {{ form.cwes.label }}
+                    </label>
+
+
+                    <div class="input-group input-group-lg">
+
+                        <select id="id_cwes" name="cwes" multiple="multiple" style="width:100%;height:46px"
+                                data-ajax-url="{% url 'frontpage:get_cwes' %}"
+                                data-page-limit="{{ cwe_limit }}"></select>
+
+                        <div class="input-group-btn">
+                            <button class="btn btn-success btn-flat" id="cwe-submit-button" type="button"
+                                    data-ajax-url="{% url 'frontpage:get_misusecases' %}"
+                                    title="Misuse Cases, Use Cases &<br/>Overlooked Security Requirements"
+                                    data-html="true">Get MUOs
+                            </button>
+                        </div>
+                        <!-- /btn-group -->
+                    </div>
+
+
+                    {% if form.cwes.errors %}
+                        {% for error in form.cwes.errors %}
+                            <p class="help-block"><strong>{{ error|escape }}</strong></p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-md-12 muo-search-container" style="display: none;">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div>
+                            <div id="misuse-case-title-label">Misuse Cases</div>
+                            <div id="use-case-title-label">Use Cases & Overlooked Security Requirements</div>
+                        </div>
+                        <hr style="margin: 0px;"/>
+                        <div class="slim-scroll-div"></div>
+                        {# slim-scroll-div is to loaded from misusecase.html after the ajax response #}
+                        <div class="fat-scroll-div"></div>
+                        {# fat-scroll-div is to loaded from usecase.html after the ajax response #}
+                    </div>
+                </div>
+            </div>
+
+            {# Modal used for popups, such as report inappropriate#}
+            <div class="modal fade" id="muo-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></div>
+
+
+        </form>
+
+{% endblock %}

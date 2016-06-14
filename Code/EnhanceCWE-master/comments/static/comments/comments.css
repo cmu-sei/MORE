@@ -1,0 +1,39 @@
+.comments-container {
+    border-top: 1px solid #e7eaec;
+    padding: 0px 15px 15px 15px;
+    background: #f9f9f9;
+    margin: 10px -15px 0 -15px;
+}
+
+.comments-container .comment-item img {
+    width: 32px;
+    margin-right: 10px;
+}
+
+.comments-container .comment-item:first-child {
+    margin-top: 0;
+}
+
+.comments-container .comment-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #e7eaec;
+    font-size: 13px;
+}
+
+.comments-container .comment-item p {
+    margin-bottom: 0;
+    display: inline;
+}
+
+.comments-container .comment-item p:first-child {
+    display: inline;
+}
+
+.comments-container .comment-item textarea {
+    font-size: 13px;
+}
+
+.comments-container a.not-active {
+    pointer-events: none;
+    cursor: default;
+}

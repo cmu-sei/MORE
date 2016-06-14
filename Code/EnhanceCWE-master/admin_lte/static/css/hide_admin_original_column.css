@@ -1,0 +1,12 @@
+td.original p{
+  display: none
+}
+
+td.original {
+    display: table;
+    border-left: none;
+}
+
+.inline-group .tabular tr.has_original td {
+    padding-top: 0em;
+}

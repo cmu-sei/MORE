@@ -1,0 +1,6 @@
+{% extends "admin/change_form.html" %}
+{% load invitation_extras %}
+
+{% block submit_buttons_bottom %}
+    {% invitation_submit_row %}
+{% endblock %}

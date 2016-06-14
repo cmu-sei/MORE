@@ -1,0 +1,9 @@
+{% block body %}
+Dear User,
+    The EnhancedCWE Application admin has sent an invitation to join. Please click the following URL to register to the application.
+    {{ site_url }}{{ site_path }}?token={{ key }}&email={{ email }}
+
+    {{ request.build_absolute_uri }}
+
+- Enhanced CWE Application
+{% endblock %}

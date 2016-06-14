@@ -1,0 +1,80 @@
+{% extends "frontpage/base.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'frontpage/frontpage.css' %}"/>
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src={% static "frontpage/frontpage.js" %}></script>
+{% endblock %}
+
+{% block navbar %} {% endblock %}
+
+{% block pre_container %}
+    <div class="marquee" id="marquee" role="main" tabindex="-1">
+        <div class="container">
+            <span class="more-icon more-icon-lg more-icon-outline">
+                MORE
+            </span>
+
+            <h2><b>M</b>alware-driven <b>O</b>verlooked <b>RE</b>quirements</h2>
+
+            <p class="lead"> This site is meant to guide requirement engineers in identifying security requirements
+                appropriate for their project. The site focuses on exploited vulnerabilities resulting from design
+                flaws. For each new publicly posted exploited vulnerability, contributors can identify and provide a
+                misuse case, use case and the overlooked security requirement(s) that created the vulnerability. This
+                helps requirements engineers avoid these and potentially other vulnerabilities in their systems. Please
+                register to use and enjoy.</p>
+
+            {% if not user.is_authenticated %}
+                <p class="lead">
+                    <a href="{% url 'account_signup' %}" class="btn btn-outline-inverse btn-lg">Register Now</a>
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="col-md-12">
+
+        <form class="form-horizontal" action method="post" id="search-reports-form" novalidate
+              data-ajax-url="{% url 'report:report_list' %}">
+            {% csrf_token %}
+
+            <div class="col-md-12">
+
+                    <div class="input-group input-group-lg">
+
+                        <input type="text" class="form-control" id="search-reports-input" name="search_reports" placeholder="Search Reports...">
+
+                        <div class="input-group-btn">
+                            <button class="btn btn-success btn-flat" id="search-reports-submit" type="submit">Search
+                            </button>
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="col-md-12 search-reports-container" style="display: none;">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div class="search-reports-result">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Modal used for popups, such as report inappropriate#}
+            <div class="modal fade" id="report-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></div>
+
+
+        </form>
+
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends "frontpage/base.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'frontpage/frontpage.css' %}"/>
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src={% static "frontpage/frontpage.js" %}></script>
+{% endblock %}
+
+
+{% block title %}{{ report.title }}{% endblock %}
+
+
+{% block content %}
+
+    {{ block.super }}
+
+    <div class="box box-primary report-details">
+        <div class="box-header with-border">
+            <div class="col-md-10">
+                <h3 class="box-title"><b>{{ report.name}}: {{ report.title }}</b></h3>
+            </div>
+            <div class="col-md-2">
+                {{ report.created_at }}
+            </div>
+
+        </div>
+
+        <div class="box-body">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <p>
+                        {{ report.description }}
+                    </p>
+                </div>
+
+                <div class="col-md-12" style="margin-top:10px;">
+                    {% for cwe in report.cwes.all %}
+                        <span class="label cwe-label">{{ cwe }}</span>
+                    {% endfor %}
+
+                    <hr style="border: none; margin: 30px 0"/>
+
+                </div>
+
+
+                <div class="col-md-6" style="margin-top:15px;">
+                    <b>Misuse Case</b>
+                    <hr style="margin-top:0"/>
+
+                    {% if report.misuse_case_description %}
+                        <label class="light-label">Description</label>
+                        {{ report.misuse_case_description|linebreaks }}
+                    {% endif %}
+
+                    {% if report.misuse_case_primary_actor %}
+                        <label class="light-label">Primary Actor</label>
+                        {{ report.misuse_case_primary_actor|linebreaks }}
+                    {% endif %}
+
+                    {% if report.misuse_case_secondary_actor %}
+                        <label class="light-label">Secondary Actor</label>
+                        {{ report.misuse_case_secondary_actor|linebreaks }}
+                    {% endif %}
+
+                    {% if report.misuse_case_precondition %}
+                        <label class="light-label">Pre-condition</label>
+                        {{ report.misuse_case_precondition|linebreaks }}
+                    {% endif %}
+
+                    {% if report.misuse_case_flow_of_events %}
+                        <label class="light-label">Flow of events</label>
+                        {{ report.misuse_case_flow_of_events|linebreaks }}
+                    {% endif %}
+
+                    {% if report.misuse_case_assumption %}
+                        <label class="light-label">Assumption</label>
+                        {{ report.misuse_case_assumption|linebreaks }}
+                    {% endif %}
+
+                    {% if report.misuse_case_source %}
+                        <label class="light-label">Source</label>
+                        {{ report.misuse_case_source|linebreaks }}
+                    {% endif %}
+                </div>
+
+
+                <div class="col-md-6" style="margin-top:15px;">
+                    <b>Use Case</b>
+                    <hr style="margin-top:0"/>
+
+                    {% if report.use_case_description %}
+                        <label class="light-label">Description</label>
+                        {{ report.use_case_description|linebreaks }}
+                    {% endif %}
+
+                    {% if report.use_case_primary_actor %}
+                        <label class="light-label">Primary Actor</label>
+                        {{ report.use_case_primary_actor|linebreaks }}
+                    {% endif %}
+
+                    {% if report.use_case_secondary_actor %}
+                        <label class="light-label">Secondary Actor</label>
+                        {{ report.use_case_secondary_actor|linebreaks }}
+                    {% endif %}
+
+                    {% if report.use_case_precondition %}
+                        <label class="light-label">Pre-condition</label>
+                        {{ report.use_case_precondition|linebreaks }}
+                    {% endif %}
+
+                    {% if report.use_case_flow_of_events %}
+                        <label class="light-label">Flow of events</label>
+                        {{ report.use_case_flow_of_events|linebreaks }}
+                    {% endif %}
+
+                    {% if report.use_case_assumption %}
+                        <label class="light-label">Assumption</label>
+                        {{ report.use_case_assumption|linebreaks }}
+                    {% endif %}
+
+                    {% if report.use_case_source %}
+                        <label class="light-label">Source</label>
+                        {{ report.use_case_source|linebreaks }}
+                    {% endif %}
+                </div>
+
+
+                <div class="col-md-12" style="margin-top:30px">
+                    <b>Overlooked Security Requirement</b>
+                    <hr style="margin-top:0"/>
+                    {{ report.osr|linebreaks }}
+                </div>
+
+                {% if user.is_authenticated %}
+                <div class="pull-right">
+                    <a href="#report-modal" class="btn btn-xs" data-toggle="modal"
+                       data-ajax-url="{% url 'report:create_issue_report' %}"
+                       data-report-id="{{ report.pk }}"
+                       title data-original-title="Report Issue">
+                        <span class="fa fa-exclamation-triangle"></span>
+                        Report Issue
+                    </a>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    {# Modal used for popups, such as report inappropriate#}
+    <div class="modal fade" id="report-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"></div>
+
+
+    <script>
+    jQuery(function() {
+
+        $("#report-modal").on("show.bs.modal", function (e) {
+            var report_id = $(e.relatedTarget).data('report-id');
+            var url = $(e.relatedTarget).data('ajax-url');
+
+            // Load the report issue dialog
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {report_id: report_id}, // Send the selected use case id
+
+                success: function (result) {
+                    $(e.currentTarget).html(result);
+                },
+
+                error: function (xhr, errmsg, err) {
+                    // Show error message in the alert
+                    alert("Oops! We have encountered and error \n" + errmsg);
+                }
+            });
+        });
+    });
+    </script>
+
+{% endblock %}

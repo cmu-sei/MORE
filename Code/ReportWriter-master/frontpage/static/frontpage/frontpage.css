@@ -1,0 +1,136 @@
+.content {
+    min-height: 0;
+}
+
+.marquee {
+    position: relative;
+    padding: 30px 0;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+    background-color: #2f4050;
+    background-repeat: repeat-x;
+    margin-bottom: 15px;
+}
+
+.marquee .more-icon {
+    margin: 0 auto 30px;
+}
+
+.marquee h1 {
+    font-weight: 300;
+    line-height: 1;
+    color: #fff;
+}
+
+.marquee .lead {
+    margin: 0 auto 30px;
+    color: #fff;
+}
+
+.marquee .btn {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 20px;
+}
+
+@media (min-width: 480px) {
+    .marquee .btn {
+        width: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .marquee {
+        padding: 50px 0;
+    }
+
+    .marquee h1 {
+        font-size: 60px;
+    }
+}
+
+@media (min-width: 992px) {
+    .marquee .lead {
+        width: 80%;
+    }
+}
+
+.btn-outline-inverse {
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff !important;
+}
+
+.btn-outline-inverse:active, .btn-outline-inverse:focus, .btn-outline-inverse:hover {
+    color: #fff;
+    text-shadow: none;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.more-icon {
+    display: block;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+    cursor: default;
+    border-radius: 10%
+}
+
+.more-icon-sm {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.more-icon-lg {
+    width: 247px;
+    height: 110px;
+    font-size: 80px;
+    line-height: 107px;
+}
+
+.more-icon-outline {
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+.search-reports-container {
+    margin-top: 20px;
+}
+
+.search-reports-container .report-title {
+    float: left;
+    font-weight: bold;
+}
+
+.search-reports-container .report-date {
+    float: right;
+    color: #888;
+    font-size: 85%
+}
+
+.search-reports-container .report-desc {
+    clear: both;
+}
+
+.search-reports-container .report-readmore {
+    margin-top: -7px;
+    margin-bottom: 7px;
+}
+
+
+.report-details .cwe-label {
+    background-color: #27b6af;
+    font-size: 90%;
+    line-height: 2;
+}
+
+
+.report-details .light-label {
+    clear: both;
+    color: #666;
+    margin-bottom: 0px;
+}

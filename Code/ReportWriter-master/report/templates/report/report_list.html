@@ -1,0 +1,21 @@
+{% load static %}
+
+{% if reports %}
+    <table class="table table-hover ">
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td {% if forloop.first %} style="border-top:none" {% endif %}>
+                    <span class="report-title">{{ report.title }}</span>
+                    <span class="report-date">{{ report.created_at }}</span>
+                    <div class="report-desc">{{ report.description|linebreaks|truncatewords:100 }}</div>
+                    <div class="report-readmore"><a href="{% url 'report:report_details' report.pk %}">Read more...</a></div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+    <p>Sorry, no reports found matching your query!</p>
+{% endif %}

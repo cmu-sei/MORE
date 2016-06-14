@@ -1,0 +1,247 @@
+.content {
+    min-height: 0;
+}
+
+.marquee {
+    position: relative;
+    padding: 30px 0;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, .1);
+    background-color: #3c8dbc;
+    background-repeat: repeat-x;
+}
+
+.marquee .more-icon {
+    margin: 0 auto 30px;
+}
+
+.marquee h1 {
+    font-weight: 300;
+    line-height: 1;
+    color: #fff;
+}
+
+.marquee .lead {
+    margin: 0 auto 30px;
+    color: #fff;
+}
+
+.marquee .btn {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 20px;
+}
+
+@media (min-width: 480px) {
+    .marquee .btn {
+        width: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .marquee {
+        padding: 50px 0;
+    }
+
+    .marquee h1 {
+        font-size: 60px;
+    }
+}
+
+@media (min-width: 992px) {
+    .marquee .lead {
+        width: 80%;
+    }
+}
+
+.btn-outline-inverse {
+    color: #fff;
+    background-color: transparent;
+    border-color: #fff !important;
+}
+
+.btn-outline-inverse:active, .btn-outline-inverse:focus, .btn-outline-inverse:hover {
+    color: #fff;
+    text-shadow: none;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.more-icon {
+    display: block;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+    cursor: default;
+    border-radius: 10%
+}
+
+.more-icon-sm {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.more-icon-lg {
+    width: 247px;
+    height: 110px;
+    font-size: 80px;
+    line-height: 107px;
+}
+
+.more-icon-outline {
+    background-color: transparent;
+    border: 1px solid #fff;
+}
+
+#div_id_cwes .input-group-lg .select2-selection__rendered {
+    min-height: 34.5px;
+}
+
+#div_id_cwes .input-group button {
+    height: 105%;
+    margin-left:-2px;
+    padding: 0 16px;
+}
+
+
+/* Mac Finder View*/
+/*.muo-search-container .fieldset-box .box {*/
+    /*height: calc(100% - 196px)*/
+/*}*/
+
+.muo-search-container {
+    margin-bottom: 15px;
+    height: calc(100vh - 214px);
+}
+
+.muo-search-container label {
+    color: #555;
+}
+
+.muo-search-container .box, .muo-search-container .box-body{
+    height: 100%;
+}
+
+.muo-search-container .slim-scroll-div, .muo-search-container .fat-scroll-div{
+    height: calc(100% - 26px);
+    position: relative;
+    border: 1px solid #e3e3e3;
+    border-collapse: collapse;
+    overflow-y: scroll;
+    overflow-x:hidden;
+}
+
+.muo-search-container .slim-scroll-div {
+    float: left;
+    width: 35%;
+    margin-top: 0px;
+}
+
+.muo-search-container .fat-scroll-div {
+    float: right;
+    width: 65%;
+    background-color: #ecf0f5;
+    margin-bottom: 0px;
+    border-left: none;
+}
+
+.muo-search-container #misuse-case-title-label {
+    width: 35%;
+    float: left;
+    margin-bottom: 5px;
+    color: #676a6c;
+
+}
+
+.muo-search-container #use-case-title-label {
+    width: 65%;
+    float: left;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    color: #676a6c;
+}
+
+.muo-search-container .misuse-case-container {
+    border-bottom: thin double;
+    border-color: #e7eaec;
+}
+
+.muo-search-container .misuse-case-container:hover,
+    .muo-search-container .misuse-case-container.selected {
+    background-color: #f3f3f4;
+    cursor: pointer;
+}
+
+.muo-search-container .misuse-case-header {
+    /*border-right: thin double;*/
+    /*border-color: #e7eaec;*/
+    padding: 15px;
+    margin-bottom: 11px;
+}
+
+.muo-search-container .usecase-footer {
+    height: 20px;
+    margin-top: 15px;
+}
+
+.muo-search-container .misuse-case-div {
+    width: 100%;
+    padding: 0 15px;
+    border-color: #e7eaec;
+    background-color: transparent;
+    margin-top: 0px;
+}
+
+.muo-search-container {
+    margin-top:20px;
+}
+
+.muo-search-container .use-case-container {
+    width: calc(100% - 20px);
+    margin: 10px;
+    padding: 15px 15px 0 15px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(173,173,173,1);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(173,173,173,1);
+    box-shadow: 0px 0px 2px 0px rgba(173,173,173,1);
+}
+
+.muo-search-container .use-case-container .use-case-div {
+    width: 100%;
+    border-color: #e7eaec;
+    background-color: transparent;
+    margin-top: 0px;
+}
+
+.muo-search-container .use-case-container .use-case-header {
+    margin-bottom: 25px;
+}
+
+.muo-search-container #muo-date-header {
+    float: right;
+    color: #888888;
+    font-size: 85%
+}
+
+.misuse-case-div .heading, .use-case-div .heading {
+    margin-bottom: 0px;
+    font-weight: normal;
+    margin-top: 3px;
+}
+
+.misuse-case-div .text, .use-case-div .text {
+    font-weight: 300;
+}
+
+.use-case-div .osr-heading {
+    margin-top: 15px;
+    margin-bottom: 0px;
+    font-weight: 700;
+}
+
+.muo-search-container .muo_see_more_div {
+    margin-bottom: 5px;
+}

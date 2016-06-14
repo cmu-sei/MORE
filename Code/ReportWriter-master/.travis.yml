@@ -1,0 +1,30 @@
+language: python
+python:
+  - "2.7"
+# Run firefox for selenium testing
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+  - sh run_build.sh
+# command to run tests
+script:
+  - sh run_test.sh
+# results notifications
+notifications:
+  # notify via emails
+  email:
+    recipients:
+      - yaobinw@andrew.cmu.edu
+    on_success: change # Only notify when failure turns to success
+    on_failure: change # Only notify when success turns to failure
+  # notify via slack
+  slack: masre:3dIlFieh1i30E736rWWL1clW
+# whitelist
+branches:
+  only:
+    - master
+    - develop

@@ -1,0 +1,37 @@
+{% load i18n admin_static %}
+<div class="related-widget-wrapper">
+    {{ widget }}
+    {% block links %}
+
+        {% if can_search_related %}
+        <a class="related-widget-wrapper-link btn btn-xs search-related" id="search_id_{{ name }}"
+            href="{{ search_related_url }}?{{ url_params }}"
+            title="{% blocktrans %}Search {{ model }}{% endblocktrans %}">
+            <span class="glyphicon glyphicon-search"></span>
+        </a>
+        {% endif %}
+
+        {% if can_change_related %}
+        <a class="related-widget-wrapper-link btn btn-xs change-related" id="change_id_{{ name }}"
+            data-href-template="{{ change_related_template_url }}?{{ url_params }}"
+            title="{% blocktrans %}Change selected {{ model }}{% endblocktrans %}">
+            <span class="glyphicon glyphicon-edit"></span>
+        </a>
+        {% endif %}
+        {% if can_add_related %}
+        <a class="related-widget-wrapper-link btn btn-xs add-related" id="add_id_{{ name }}"
+            href="{{ add_related_url }}?{{ url_params }}"
+            title="{% blocktrans %}Add another {{ model }}{% endblocktrans %}">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
+
+        {% endif %}
+        {% if can_delete_related %}
+        <a class="related-widget-wrapper-link delete-related" id="delete_id_{{ name }}"
+            data-href-template="{{ delete_related_template_url }}?{{ url_params }}"
+            title="{% blocktrans %}Delete selected {{ model }}{% endblocktrans %}">
+            <span class="glyphicon glyphicon-delete"></span>
+        </a>
+        {% endif %}
+    {% endblock %}
+</div>

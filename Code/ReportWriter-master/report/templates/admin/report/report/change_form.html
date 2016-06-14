@@ -1,0 +1,167 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_static crispy_forms_tags widget_tweaks %}
+{% load report_extras %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script src={% static "dist/js/select2.min.js" %}></script>
+    <script src={% static "report/report_change_form.js" %}></script>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "dist/css/select2.min.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "report/report_change_form.css" %}"/>
+{% endblock %}
+
+
+{% block field_sets %}
+
+    {% with adminform.form as form %}
+
+
+        <div id="report-container" class="fieldset-box col-md-12 {% if readonly %}readonly{% endif %}">
+            <div class="box box-primary">
+                <div class="box-body">
+
+                    <div style="margin-left:-15px; margin-right:-15px">
+
+                        <div class="col-md-6">
+                            {{ form.name|as_crispy_field }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.status|as_crispy_field }}
+                        </div>
+
+                    </div>
+
+
+                    {{ form.title|as_crispy_field }}
+                    {{ form.description|as_crispy_field }}
+
+                    {{ form.cwes|attr:"hidden:true" }}
+
+
+                    <div id="div_id_selected_cwes" class="form-group {% if form.cwes.errors %} has-error {% endif %}">
+                        <label for="id_selected_cwes" class="control-label  requiredField">
+				            CWEs<span class="asteriskField">*</span>
+			            </label>
+
+                        <div id="controls">
+
+                            <select id="id_selected_cwes" name="selected_cwes" multiple="multiple"
+                                    data-ajax-url="{% url 'admin:report_report_get_cwes' %}"
+                                    data-init-url="{% url 'admin:report_report_init_cwes' %}"
+                                    data-report-id="{{ object_id|default_if_none:'' }}"
+                                    data-page-limit="{{ cwe_limit }}" style="width:87%"></select>
+
+                            <button type="button" class="btn btn-success btn-md" id="cwe-suggestion-button"
+                                    data-ajax-url="{% url 'admin:report_report_suggest_cwes' %}" style="float:right; width:12%">Suggest CWEs
+                            </button>
+                        </div>
+
+                        {% if form.cwes.errors %}
+                            {% for error in form.cwes.errors %}
+                                <p class="help-block"><strong>{{ error|escape }}</strong></p>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!--This will be updated whenever cwe selection has changed. It is used in response_change()-->
+                        <input type="hidden" name="cwe_changed" id="cwe_changed" value="{% if form.cwes.errors %}true{% else %}false{% endif %}">
+
+                    </div>
+
+                    <div class="muo-search-container">
+                        <div class="form-group" id="muo-container" hidden>
+                            <div class="slim-scroll-div"></div>
+                            {# slim-scroll-div is to loaded from misusecase.html after the ajax response #}
+                            <div class="fat-scroll-div"></div>
+                            {# fat-scroll-div is to loaded from usecase.html after the ajax response #}
+
+                            <div class="form-group">
+                                <button type="button" class="btn btn-success btn-md pull-right" id="muo-select"
+                                        style="margin-top: 4px">Select
+                                </button>
+                                <button type="button" class="btn btn-danger btn-md" id="muo-close"
+                                        style="float: right; margin-right:1%; margin-top: 4px">Close
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="muo-container-option-buttons">
+                            <button type="button" class="btn btn-info pull-right" id="misusecase-suggestion">Suggest
+                                Misuse Cases and Use Cases
+                            </button>
+                            <button type="button" class="btn btn-info pull-right" style="margin: 0 10px"
+                                    id="misusecase-custom">Write my own Misuse Case and Use Case
+                            </button>
+                        </div>
+
+                        <div class="form-group" id="custom-muo-container" style="margin-left: 0px" {% if not original.custom %}hidden{% endif %}>
+
+                            <!--This will be updated whenever custom muo status is changed. It is used in response_change()-->
+                            <input type="hidden" id="custom-muo-flag" name="custom" value="{{ original.custom }}">
+
+                            <div class="col-md-6">
+                                <label style="margin-bottom: 0px;">Misuse Case:</label>
+                                <hr style="margin-top: 5px">
+                                {{ form.misuse_case_description|attr:"rows:7"|as_crispy_field }}
+                                {{ form.misuse_case_primary_actor|as_crispy_field }}
+                                {{ form.misuse_case_secondary_actor|as_crispy_field }}
+                                {{ form.misuse_case_precondition|attr:"rows:2"|as_crispy_field }}
+                                {{ form.misuse_case_flow_of_events|attr:"rows:3"|as_crispy_field }}
+                                {{ form.misuse_case_postcondition|attr:"rows:2"|as_crispy_field }}
+                                {{ form.misuse_case_assumption|attr:"rows:2"|as_crispy_field }}
+                                {{ form.misuse_case_source|attr:"rows:1"|as_crispy_field }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label style="margin-bottom: 0px;">Use Case:</label>
+                                <hr style="margin-top: 5px">
+                                {{ form.use_case_description|attr:"rows:7"|as_crispy_field }}
+                                {{ form.use_case_primary_actor|as_crispy_field }}
+                                {{ form.use_case_secondary_actor|as_crispy_field }}
+                                {{ form.use_case_precondition|attr:"rows:2"|as_crispy_field }}
+                                {{ form.use_case_flow_of_events|attr:"rows:3"|as_crispy_field }}
+                                {{ form.use_case_postcondition|attr:"rows:2"|as_crispy_field }}
+                                {{ form.use_case_assumption|attr:"rows:2"|as_crispy_field }}
+                                {{ form.use_case_source|attr:"rows:1"|as_crispy_field }}
+                            </div>
+
+                            <div class="col-md-12">
+                                {{ form.osr_pattern_type|as_crispy_field }}
+                                {{ form.osr|attr:"rows:5"|as_crispy_field }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endwith %}
+{% endblock %}
+
+
+{# Priting the rejection reason at the top of the form#}
+{% block form_top %}
+{% if original.status == 'rejected' %}
+    {# if in rejected status, print in error alert#}
+    <div class="alert alert-error"><strong>
+        This Report has been rejected
+        {% if original.reject_reason %}
+            : {{ original.reject_reason }}
+        {% endif %}
+    </strong></div>
+
+{% elif original.reject_reason and original.status != 'rejected' and original.status != 'approved' %}
+    {# if in approved state, don't print reject message. Else, print in warning alert#}
+    <div class="alert alert-warning">
+        This Report used to be rejected: {{ original.reject_reason }}
+    </div>
+{% endif %}
+{% endblock %}
+
+
+
+{% block submit_buttons_bottom %}
+    {% report_submit_row %}
+{% endblock %}

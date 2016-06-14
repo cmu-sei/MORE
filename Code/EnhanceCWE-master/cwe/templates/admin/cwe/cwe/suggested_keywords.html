@@ -1,0 +1,27 @@
+<div id="suggested_keywords_container">
+
+    {% if keywords %}
+    <span id="suggested_keywords_wrapper" class="modern-style autocomplete-light-widget multiple" style="width:100%;">
+        <span id="suggested_keywords_deck" class="deck">
+            {% for keyword in keywords %}
+                <span data-value="{{ keyword }}"><span style="display: inline-block;" class="remove">ˣ</span>{{ keyword }}</span>
+            {% endfor %}
+        </span>
+
+        <select style="display:none" class="value-select" name="suggested_keywords" id="suggested_keywords" multiple="multiple">
+            {% for keyword in keywords %}
+                <option value="{{ keyword }}" selected="selected">{{ keyword }}</option>
+            {% endfor %}
+        </select>
+    </span>
+
+    <div class="pull-right" style="margin-top:5px">
+    <input type="submit" id="add_keywords_button" class="btn btn-success btn-sm" autocomplete="off"
+           value="Add Keywords" name="_add_keywords_button">
+    </div>
+
+    {% else %}
+        <div class='alert-danger alert radius' role='alert'>No keywords detected in the provided text!</div>
+    {% endif %}
+
+</div>

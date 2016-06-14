@@ -1,0 +1,25 @@
+{% extends "mailer/base.html" %}
+{% load i18n %}
+
+{% block bg_color %}#3c8dbc{% endblock %}
+
+{% block branding %}
+    <h1 style="color:#FFFFFF;line-height:100%;font-family:'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:18px;font-weight:normal;margin-bottom:5px;text-align:left;padding:0 10px">
+        <a href="https://serf-sei.herokuapp.com" style="color:#FFF;text-decoration:none">
+            <span style="text-decoration:none"><b>SERF</b></span>
+        </a>
+    </h1>
+{% endblock %}
+
+
+{% block site_url %}
+    <a href="https://serf-sei.herokuapp.com" target="_blank" style="color:#828282;">
+        <span style="color:#828282">SERF</span>
+    </a>
+{% endblock %}
+
+{% block footer %}
+    <div style="font-size:11px">
+        If you do not want to receive emails from us, you can login to your account and change your notification settings under your profile.
+    </div>
+{% endblock %}

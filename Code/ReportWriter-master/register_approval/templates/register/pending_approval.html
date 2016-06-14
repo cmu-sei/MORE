@@ -1,0 +1,21 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Pending Admin Approval" %}{% endblock %}
+
+
+{% block content %}
+
+    {{ block.super }}
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">{% trans "Pending Admin Approval" %}</h3>
+        </div>
+
+        <div class="box-body">
+            <p>{% blocktrans %}Your registration request was successful and now is pending for admin approval. This should take no longer than 5 business days{% endblocktrans %}</p>
+        </div>
+
+{% endblock %}

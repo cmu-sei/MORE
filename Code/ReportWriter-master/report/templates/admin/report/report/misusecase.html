@@ -1,0 +1,98 @@
+{% load static %}
+
+<div class="slim-scroll-div">
+    <label class="muo-title-header" for="description">Misuse Cases</label>
+    {% for misusecase in misuse_cases %}
+        <div class="misuse-case-container" data-value="{{ misusecase.id }}">
+            <div class="misuse-case-header">
+                <label class="pull-left" id="misuse-case-name-label">{{ misusecase.name }}</label>
+                <label id="muo-date-header">{{ misusecase.created_at }}</label>
+            </div>
+            <div class="misuse-case-div">
+                <div>
+                    <label class="heading">Description</label>
+                </div>
+                <div class="text"
+                     id="misuse-case-description">{{ misusecase.misuse_case_description|linebreaks }}</div>
+            </div>
+
+            <div id="hidden_attributes{{ misusecase.id }}" style="display: none">
+
+                {% if misusecase.misuse_case_primary_actor %}
+                    <div class="misuse-case-div">
+                        <div>
+                            <label class="heading">Primary Actor</label>
+                        </div>
+                        <div class="text"
+                             id="misuse-case-primary-actor">{{ misusecase.misuse_case_primary_actor|linebreaks }}</div>
+                    </div>
+                {% endif %}
+
+                {% if misusecase.misuse_case_secondary_actor %}
+                    <div class="misuse-case-div">
+                        <div>
+                            <label class="heading">Secondary Actor</label>
+                        </div>
+                        <div class="text"
+                             id="misuse-case-secondary-actor">{{ misusecase.misuse_case_secondary_actor|linebreaks }}</div>
+                    </div>
+                {% endif %}
+
+                {% if misusecase.misuse_case_precondition %}
+                    <div class="misuse-case-div">
+                        <div>
+                            <label class="heading">Pre-condition</label>
+                        </div>
+                        <div class="text"
+                             id="misuse-case-precondition">{{ misusecase.misuse_case_precondition|linebreaks }}</div>
+                    </div>
+                {% endif %}
+
+                {% if misusecase.misuse_case_flow_of_events %}
+                    <div class="misuse-case-div">
+                        <div>
+                            <label class="heading">Flow of Events</label>
+                        </div>
+                        <div class="text"
+                             id="misuse-case-flow-of-events">{{ misusecase.misuse_case_flow_of_events|linebreaks }}</div>
+                    </div>
+                {% endif %}
+
+                {% if misusecase.misuse_case_postcondition %}
+                    <div class="misuse-case-div">
+                        <div>
+                            <label class="heading">Post-condition</label>
+                        </div>
+                        <div class="text"
+                             id="misuse-case-postcondition">{{ misusecase.misuse_case_postcondition|linebreaks }}</div>
+                    </div>
+                {% endif %}
+
+                {% if misusecase.misuse_case_assumption %}
+                    <div class="misuse-case-div">
+                        <div>
+                            <label class="heading">Assumption</label>
+                        </div>
+                        <div class="text"
+                             id="misuse-case-assumption">{{ misusecase.misuse_case_assumption|linebreaks }}</div>
+                    </div>
+                {% endif %}
+
+                {% if misusecase.misuse_case_source %}
+                    <div class="misuse-case-div">
+                        <div>
+                            <label class="heading">Source</label>
+                        </div>
+                        <div class="text"
+                             id="misuse-case-source">{{ misusecase.misuse_case_source|linebreaks }}</div>
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="misuse-case-div">
+                <div class="muo_see_more_div"><a id="muo_see_more" data-value="{{ misusecase.id }}">See More</a></div>
+            </div>
+
+        </div>
+    {% endfor %}
+</div>

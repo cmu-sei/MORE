@@ -1,0 +1,39 @@
+{% extends "frontpage/base.html" %}
+{% load url from future %}
+{% load i18n%}
+
+
+{% block content %}
+
+    {{ block.super }}
+
+    {% block account_box_container %}
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">{% block account_box_title %}{% endblock %}</h3>
+            </div>
+
+            {% block account_box_form %}
+
+            <div class="box-body">
+                <div class="col-md-10 col-md-offset-1">
+                    {% block account_box_body %} {% endblock %}
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-12">
+                        {% block account_box_footer %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+            {% endblock %}
+
+        </div>
+
+        {% endblock %}
+
+{% endblock %}

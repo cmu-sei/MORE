@@ -1,0 +1,129 @@
+{% extends "frontpage/base.html" %}
+{% load i18n static crispy_forms_tags %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}" />{% endblock %}
+
+{% block title %}{% trans 'My Profile' %}{% endblock %}
+{% block content_title %}<h1>{% trans 'My Profile' %}</h1>{% endblock %}
+
+
+{% block content %}
+
+    {{ block.super }}
+
+    {% if form.errors or mailer_form.errors%}
+    <div class="alert alert-danger">
+        {% trans "Please correct the error(s) below." %}
+        {{ form.non_field_errors }}
+        {{ mailer_form.non_field_errors }}
+    </div>
+    {% endif %}
+
+
+    <form class="form-horizontal" action method="post">
+        {% csrf_token %}
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">{% blocktrans %}Personal Information{% endblocktrans %}</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-6">
+                        {{ form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.last_name|as_crispy_field }}
+                    </div>
+                </div>
+
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <a href="{% url 'account_change_password' %}">Change My Password</a><br>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <a href="{% url 'account_email' %}">Manage My Emails</a><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">{% blocktrans %}Notification Settings{% endblocktrans %}</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="col-md-10 col-md-offset-1">
+                    {% crispy mailer_form %}
+                </div>
+            </div>
+        </div>
+
+        {% if rest_token %}
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">{% blocktrans %}REST API{% endblocktrans %}</h3>
+            </div>
+
+            <div class="box-body">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="id_rest_token" class="control-label">
+                                REST Token
+                            </label>
+                            <div class="controls">
+                                <input class="textinput form-control" id="id_rest_token" name="rest_token" type="text" value="{{ rest_token }}" readonly style="float:left; width:80%"/>
+                                <input type="submit" class="btn btn-danger btn-md" id="id_rest_token_submit" name="rest_token_submit" value="Change Token" style="float:right; width:18%"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+        <div class="box box-danger">
+            <div class="box-body" style="padding:30px 10px;">
+                <button type="button" class="btn btn-danger center-block" data-toggle="modal" data-target="#deactivate-modal" name="_deactivate_account" >{% trans 'Deactivate My Account' %}</button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deactivate-modal" tabindex="-1" role="dialog" aria-labelledby="Deactivate Account" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+					</div>
+					<div class="modal-body">
+						<h4>Are you sure you want to deactivate your account?</h4>
+                        <br/>
+                        <p>This action cannot be undone and you won't be able to login to your account any longer</p>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
+                        <input type="submit" id="deactivate_account_button" class="btn btn-danger" value="{% trans 'Deactivate' %}" name="_deactivate_account">
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+        <div class="pull-right">
+            <input type="submit" value="{% trans 'Save' %}" class="btn btn-success default" name="_save" />
+        </div>
+
+        <div class="spacer"></div>
+
+    </form>
+
+{% endblock %}

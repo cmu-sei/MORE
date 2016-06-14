@@ -1,0 +1,58 @@
+{% load i18n admin_urls %}
+<div class="pull-left">
+    {% if show_delete_link %}
+        {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+        <a class="btn btn-danger deletelink" href="{% add_preserved_filters delete_url %}">{% trans "Delete" %}</a>
+    {% endif %}
+</div>
+<div class="pull-right">
+
+{% if show_investigate_issue %}<input type="submit" value="{% trans 'Investigate' %}" class="btn btn-default" name="_investigate" />{% endif %}
+{% if show_resolve_issue %}<button type="button" class="btn btn-default" data-toggle="modal" data-target="#resolve-model" name="_resolve" >{% trans 'Resolve' %}</button>{% endif %}
+{% if show_reopen_issue %}<input type="submit" value="{% trans 'Re-Open' %}" class="btn btn-default" name="_reopen" />{% endif %}
+{% if show_open_issue %}<input type="submit" value="{% trans 'Open' %}" class="btn btn-default" name="_open" />{% endif %}
+</div>
+<div class="spacer"></div>
+
+{% if show_resolve_issue %}
+<!-- Resolve Modal -->
+<div class="modal fade" id="resolve-model" tabindex="-1" role="dialog" aria-labelledby="Resolve" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Resolve {{ original }}</h4>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" id="resolve_reason_text" name="resolve_reason_text" style="max-width: 100%"
+                  rows="3" placeholder="Reason to resolve the issue..."></textarea>
+
+          <p class="text-muted">Minimum characters: 15</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <input type="submit" id="resolve_button" class="btn btn-primary" value="{% trans 'Resolve' %}"
+               name="_resolve" />
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{# Disable resolve button if not enough characters in resolve message#}
+<script type="text/javascript">
+    django.jQuery(function($) {
+        var container = $(document);
+        var resolve_button = $('#resolve_button');
+        resolve_button.attr("disabled", "disabled");
+
+        container.on('keyup', '#resolve_reason_text', function (event) {
+            if (this.textLength > 15) {
+                resolve_button.removeAttr("disabled");
+            } else {
+                resolve_button.attr("disabled", "disabled");
+            }
+        });
+
+    });
+</script>

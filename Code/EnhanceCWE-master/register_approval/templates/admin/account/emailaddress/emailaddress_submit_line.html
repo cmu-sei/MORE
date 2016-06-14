@@ -1,0 +1,60 @@
+{% load i18n admin_urls %}
+<div class="pull-left">
+    {% if show_delete_link %}
+        {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+        <a class="btn btn-danger deletelink" href="{% add_preserved_filters delete_url %}">{% trans "Delete" %}</a>
+    {% endif %}
+</div>
+<div class="pull-right">
+{% if show_reject %}<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reject-model" name="_reject" >{% trans 'Reject' %}</button>{% endif %}
+{% if show_approve %}<input type="submit" value="{% trans 'Approve' %}" class="btn btn-primary" name="_approve" />{% endif %}
+
+{% if show_save_as_new %}<input type="submit" value="{% trans 'Save as new' %}" class="btn btn-default" name="_saveasnew" {{ onclick_attrib }}/>{% endif %}
+{% if show_save_and_add_another %}<input type="submit" value="{% trans 'Save and add another' %}" class="btn btn-default" name="_addanother" {{ onclick_attrib }} />{% endif %}
+{% if show_save_and_continue %}<input type="submit" value="{% trans 'Save and continue editing' %}" class="btn btn-default" name="_continue" {{ onclick_attrib }}/>{% endif %}
+{% if show_save %}<input type="submit" value="{% trans 'Save' %}" class="btn btn-primary default" name="_save" {{ onclick_attrib }}/>{% endif %}
+</div>
+<div class="spacer"></div>
+
+{% if show_reject %}
+<!-- Reject Modal -->
+<div class="modal fade" id="reject-model" tabindex="-1" role="dialog" aria-labelledby="Reject" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Reject {{ original }}</h4>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" id="reject_reason_text" name="reject_reason_text" style="max-width: 100%"
+                  rows="3" placeholder="Reason to reject the registration..."></textarea>
+
+          <p class="text-muted">Minimum characters: 15</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <input type="submit" id="reject_button" class="btn btn-danger" value="{% trans 'Reject' %}"
+               name="_reject" />
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{# Disable reject button if not enough characters in reject message#}
+<script type="text/javascript">
+    django.jQuery(function($) {
+        var container = $(document);
+        var reject_button = $('#reject_button');
+        reject_button.attr("disabled", "disabled");
+
+        container.on('keyup', '#reject_reason_text', function (event) {
+            if (this.textLength > 15) {
+                reject_button.removeAttr("disabled");
+            } else {
+                reject_button.attr("disabled", "disabled");
+            }
+        });
+
+    });
+</script>

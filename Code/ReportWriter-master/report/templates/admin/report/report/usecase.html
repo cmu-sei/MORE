@@ -1,0 +1,92 @@
+{% load static %}
+
+<div class="fat-scroll-div">
+    <label class="muo-title-header" for="description">Use Cases & Overlooked Security Requirements</label>
+    {% for usecase in use_cases %}
+        <div class="use-case-container" data-value="{{ usecase.id }}">
+            <div class="use-case-header">
+                <label class="pull-left" id="use-case-name-label">Use Case: {{ usecase.name }}</label>
+                <label id="muo-date-header">{{ usecase.created_at }}</label>
+            </div>
+            <div class="use-case-div">
+                <div>
+                    <label class="heading">Description</label>
+                </div>
+                <div class="text" id="use-case-description">{{ usecase.use_case_description|linebreaks }}</div>
+            </div>
+
+            {% if usecase.use_case_primary_actor %}
+            <div class="use-case-div">
+                <div>
+                    <label class="heading">Primary Actor</label>
+                </div>
+                <div class="text" id="use-case-primary-actor">{{ usecase.use_case_primary_actor|linebreaks }}</div>
+            </div>
+            {% endif %}
+
+            {% if usecase.use_case_secondary_actor %}
+            <div class="use-case-div">
+                <div>
+                    <label class="heading">Secondary Actor</label>
+                </div>
+                <div class="text" id="use-case-secondary-actor">{{ usecase.use_case_secondary_actor|linebreaks }}</div>
+            </div>
+            {% endif %}
+
+            {% if usecase.use_case_precondition %}
+            <div class="use-case-div">
+                <div>
+                    <label class="heading">Pre-condition</label>
+                </div>
+                <div class="text" id="use-case-precondition">{{ usecase.use_case_precondition|linebreaks }}</div>
+            </div>
+            {% endif %}
+
+            {% if usecase.use_case_flow_of_events %}
+            <div class="use-case-div">
+                <div>
+                    <label class="heading">Flow of Events</label>
+                </div>
+                <div class="text" id="use-case-flow-of-events">{{ usecase.use_case_flow_of_events|linebreaks }}</div>
+            </div>
+            {% endif %}
+
+            {% if usecase.use_case_postcondition %}
+            <div class="use-case-div">
+                <div>
+                    <label class="heading">Post-condition</label>
+                </div>
+                <div class="text" id="use-case-postcondition">{{ usecase.use_case_postcondition|linebreaks }}</div>
+            </div>
+            {% endif %}
+
+            {% if usecase.use_case_assumption %}
+            <div class="use-case-div">
+                <div>
+                    <label class="heading">Assumption</label>
+                </div>
+                <div class="text" id="use-case-assumption">{{ usecase.use_case_assumption|linebreaks }}</div>
+            </div>
+            {% endif %}
+
+            {% if usecase.use_case_source %}
+            <div class="use-case-div">
+                <div>
+                    <label class="heading">Source</label>
+                </div>
+                <div class="text" id="use-case-source">{{ usecase.use_case_source|linebreaks }}</div>
+            </div>
+            {% endif %}
+
+            <div class="use-case-div">
+                <div>
+                    <label class="osr-heading">Overlooked Security Requirement:</label>
+                </div>
+                <div class="text" id="use-case-osr">{{ usecase.osr }}</div>
+            </div>
+
+            <input type="hidden" id="osr-pattern-type" name="custom" value="{{ usecase.osr_pattern_type }}">
+            <br>
+        </div>
+    {% endfor %}
+</div>

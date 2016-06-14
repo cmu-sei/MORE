@@ -1,0 +1,9 @@
+{% extends "frontpage/base.html" %}{% load i18n static%}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'comments/comments.css' %}" />
+{% endblock %}
+
+{% block title %}{% trans "Responses for page" %}{% endblock %}
+{% block content_title %}<h1>{% trans "Responses for page" %}</h1>{% endblock %}

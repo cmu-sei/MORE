@@ -1,0 +1,20 @@
+{% extends "admin/change_form.html" %}
+{% load register_approval_extras %}
+
+{# Priting the rejection reason at the top of the form#}
+{% block form_top %}
+{% if original.admin_approval == 'rejected' %}
+    {# if in rejected status, print in error alert#}
+    <div class="alert alert-error"><strong>
+        This request has been rejected
+        {% if original.reject_reason %}
+            : {{ original.reject_reason }}
+        {% endif %}
+    </strong></div>
+{% endif %}
+{% endblock %}
+
+
+{% block submit_buttons_bottom %}
+    {% emailaddress_submit_row %}
+{% endblock %}

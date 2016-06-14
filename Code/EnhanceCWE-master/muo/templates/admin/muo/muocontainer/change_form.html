@@ -1,0 +1,189 @@
+{% extends "admin/change_form.html" %}
+{% load muo_extras %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <script type="text/javascript">
+    jQuery(function ($) {
+        // Get the misuse_case_type_element
+        var misuse_case_type_type_element = $( "#id_misuse_case_type" );
+        var existing_misuse_case_element = $("#id_misuse_case");
+
+        // If it's a new misuse case, hide the misuse case selection field
+        var selected_type = misuse_case_type_type_element.val();
+        if (selected_type == "new") {
+            hide_existing_misuse_case_selection_field();
+            show_misuse_case_fields();
+        }
+        else {
+            // Disable the misuse case fields
+            disable_misuse_case_fields();
+
+            // If none of the misuse case is selected, hide the misuse case fields
+            var selected_existing_misuse_case_id = existing_misuse_case_element.val();
+            if (selected_existing_misuse_case_id == null) {
+                hide_misuse_case_fields();
+            }
+        }
+
+        // Handle the selection of misuse case type field
+        misuse_case_type_type_element.change(function() {
+            var selected_type = misuse_case_type_type_element.val();
+            if (selected_type == "new") {
+                // If the selection is new, misuse case selection field must be hidden, all the misuse case fields
+                // must be visible and enabled
+                hide_existing_misuse_case_selection_field();
+                show_misuse_case_fields();
+                enable_misuse_case_fields();
+            }
+            else {
+                // If the selection is existing, hide all the misuse case fields and only show the
+                // misuse case selection field
+                hide_misuse_case_fields();
+                show_existing_misuse_case_selection_field();
+            }
+        });
+
+        // On removing the selected misuse case, hide all the misuse case fields
+        existing_misuse_case_element.change(function(e) {
+            var selected_existing_misuse_case_id = existing_misuse_case_element.val();
+            if (selected_existing_misuse_case_id) {
+                // Do Nothing
+            }
+            else {
+                enable_misuse_case_fields();
+                hide_misuse_case_fields();
+            }
+        });
+
+        $("body").on("change", "select", function(e){
+            // Register the on change event for the select field on the form. We need this for inline select fields
+            var selected_id = e.target.id;
+            var osr_id = "";
+            if (selected_id.search("osr_pattern_type") != -1) {
+                // If its a osr pattern type field for inline, we need to get its id which is generated dynamically
+                // on addition of the inline object and then construct the id of corresponding osr field so that its
+                // placeholder can be changed
+                osr_id = selected_id.replace("osr_pattern_type", "osr");
+                set_placeholder(osr_id, e.target.value);
+            }
+        });
+
+    });
+
+    function hide_existing_misuse_case_selection_field() {
+        $('#div_id_misuse_case').hide();
+    }
+
+    function hide_misuse_case_fields() {
+        $("#div_id_misuse_case_description").hide();
+        $("#div_id_misuse_case_primary_actor").hide();
+        $("#div_id_misuse_case_secondary_actor").hide();
+        $("#div_id_misuse_case_precondition").hide();
+        $("#div_id_misuse_case_flow_of_events").hide();
+        $("#div_id_misuse_case_postcondition").hide();
+        $("#div_id_misuse_case_assumption").hide();
+        $("#div_id_misuse_case_source").hide();
+    }
+
+    function show_existing_misuse_case_selection_field() {
+        $('#div_id_misuse_case').show();
+    }
+
+    function show_misuse_case_fields() {
+        $("#div_id_misuse_case_description").show();
+        $("#div_id_misuse_case_primary_actor").show();
+        $("#div_id_misuse_case_secondary_actor").show();
+        $("#div_id_misuse_case_precondition").show();
+        $("#div_id_misuse_case_flow_of_events").show();
+        $("#div_id_misuse_case_postcondition").show();
+        $("#div_id_misuse_case_assumption").show();
+        $("#div_id_misuse_case_source").show();
+    }
+
+    function disable_misuse_case_fields() {
+        // Disable fields
+        $("#id_misuse_case_description").prop("disabled",true);
+        $("#id_misuse_case_primary_actor").prop('disabled',true);
+        $("#id_misuse_case_secondary_actor").prop('disabled',true);
+        $("#id_misuse_case_precondition").prop('disabled',true);
+        $("#id_misuse_case_flow_of_events").prop('disabled',true);
+        $("#id_misuse_case_postcondition").prop('disabled',true);
+        $("#id_misuse_case_assumption").prop('disabled',true);
+        $("#id_misuse_case_source").prop('disabled',true);
+    }
+
+    function enable_misuse_case_fields() {
+        // Enable fields
+        $("#id_misuse_case_description").prop("disabled",false);
+        $("#id_misuse_case_primary_actor").prop('disabled',false);
+        $("#id_misuse_case_secondary_actor").prop('disabled',false);
+        $("#id_misuse_case_precondition").prop('disabled',false);
+        $("#id_misuse_case_flow_of_events").prop('disabled',false);
+        $("#id_misuse_case_postcondition").prop('disabled',false);
+        $("#id_misuse_case_assumption").prop('disabled',false);
+        $("#id_misuse_case_source").prop('disabled',false);
+    }
+
+    function set_placeholder(id, value) {
+        var placeholder = 'Please write the requirements in the following format:\n';
+        var addendum;
+
+        if (value == "ubiquitous") {
+            addendum = "The <system name> shall <system response>\n\n" +
+                                "Example: The software shall be written in Java";
+        }
+        else if (value == "event-driven") {
+            addendum = "WHEN <trigger> <optional precondition> the <system name> shall <system respons>\n\n" +
+                                "Example: When a DVD is inserted into the DVD player, the OS shall spin up the optical drive";
+        }
+        else if (value == "unwanted behavior") {
+            addendum = "IF <unwanted condition or event>, THEN the <system name> shall <system response>\n\n" +
+                                "Example: If the memory checksum is invalid, then the software shall display an error message";
+        }
+        else if (value == "state-driven") {
+            addendum = "WHILE <system state>, the <system name> shall <system response>\n\n" +
+                                "Example: While the heater is on, the software shall close the water intake valve";
+        }
+        else {
+            addendum = '';
+        }
+        placeholder = placeholder.concat(addendum);
+
+        // Set the placeholder of the OSR text area
+        document.getElementById(id).placeholder = placeholder;
+    }
+
+
+
+</script>
+{% endblock %}
+
+
+{# Priting the rejection reason at the top of the form#}
+{% block form_top %}
+{% if original.status == 'rejected' %}
+    {# if in rejected status, print in error alert#}
+    <div class="alert alert-error"><strong>
+        This MUO has been rejected
+        {% if original.reject_reason %}
+            : {{ original.reject_reason }}
+        {% endif %}
+    </strong></div>
+
+{% elif original.reject_reason and original.status != 'rejected' and original.status != 'approved' %}
+    {# if in approved state, don't print reject message. Else, print in warning alert#}
+    <div class="alert alert-warning">
+        This MUO used to be rejected: {{ original.reject_reason }}
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+    {% muo_submit_row %}
+{% endblock %}
+
+
+
+
+
